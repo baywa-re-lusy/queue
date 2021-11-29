@@ -1,8 +1,8 @@
 <?php
 
 use BayWaReLusy\QueueTools\QueueService;
-use BayWaReLusy\QueueTools\Adapter\SqsAdapter;
-use BayWaReLusy\QueueTools\Adapter\SqsAdapterFactory;
+use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter;
+use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapterFactory;
 
 return [
     'service_manager' =>
@@ -13,7 +13,7 @@ return [
                 ],
             'factories' =>
                 [
-                    SqsAdapter::class => SqsAdapterFactory::class,
+                    AwsSqsAdapter::class => AwsSqsAdapterFactory::class,
                 ],
             'abstract_factories' =>
                 [
