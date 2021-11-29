@@ -1,28 +1,27 @@
 <?php
 
 /**
- * EmailTools.php
+ * QueueTools.php
  *
- * @date        13.10.2021
+ * @date        29.11.2021
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
- * @file        EmailTools.php
+ * @file        QueueTools.php
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly
  *              prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\EmailTools;
+namespace BayWaReLusy\QueueTools;
 
-use BayWaReLusy\QueueTools\QueueToolsConfig;
 use Laminas\ServiceManager\ServiceManager;
 
 /**
- * Class EmailTools
+ * Class QueueTools
  *
  * Entry-point to use the tool-set
  *
  * @package     BayWaReLusy
- * @subpackage  EmailTools
+ * @subpackage  QueueTools
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly

@@ -11,11 +11,10 @@
  *            prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\EmailTools;
+namespace BayWaReLusy\QueueTools;
 
 use BayWaReLusy\QueueTools\Adapter\PollingQueueAdapterInterface;
 use BayWaReLusy\QueueTools\Adapter\QueueAdapterInterface;
-use BayWaReLusy\QueueTools\Message;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
