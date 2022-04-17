@@ -38,11 +38,17 @@ class RabbitMQAdapter implements ConsumingQueueAdapterInterface
     /**
      * @inheritDoc
      */
-    public function consumeQueue(string $queueUrl): void
+    public function consumeQueue(string $queueUrl, callable $callback): void
     {
         $connection = new AMQPStreamConnection($this->hostname, 5672, 'guest', 'guest');
         $channel = $connection->channel();
         $channel->queue_declare($queueUrl, false, false, false, false);
+        $channel->basic_consume($queueUrl, '', false, true, false, false, $callback);
+
+        while ($channel->is_open()) {
+            echo 'test' . "\n";
+            $channel->wait();
+        }
     }
 
     /**

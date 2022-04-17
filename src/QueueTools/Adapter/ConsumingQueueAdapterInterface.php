@@ -29,6 +29,7 @@ interface ConsumingQueueAdapterInterface extends QueueAdapterInterface
      * Consume the queue.
      *
      * @param string $queueUrl
+     * @param callable $callback
      */
-    public function consumeQueue(string $queueUrl): void;
+    public function consumeQueue(string $queueUrl, callable $callback): void;
 }
