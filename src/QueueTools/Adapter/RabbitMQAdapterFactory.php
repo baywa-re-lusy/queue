@@ -1,11 +1,11 @@
 <?php
 
 /**
- * PollingQueueAdapterInterface.php
+ * RabbitMQAdapterFactory.php
  *
- * @date      29.11.2021
+ * @date      18.04.2022
  * @author    Pascal Paulis <pascal.paulis@baywa-re.com>
- * @file      PollingQueueAdapterInterface.php
+ * @file      RabbitMQAdapterFactory.php
  * @copyright Copyright (c) BayWa r.e. - All rights reserved
  * @license   Unauthorized copying of this source code, via any medium is strictly
  *            prohibited, proprietary and confidential.
@@ -13,25 +13,28 @@
 
 namespace BayWaReLusy\QueueTools\Adapter;
 
-use BayWaReLusy\QueueTools\Message;
+use BayWaReLusy\QueueTools\QueueToolsConfig;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
- * PollingQueueAdapterInterface
+ * Class RabbitMQAdapterFactory
  *
  * @package     BayWaReLusy
- * @subpackage  Tools
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly
  *              prohibited, proprietary and confidential.
+ *
+ * @codeCoverageIgnore
  */
-interface PollingQueueAdapterInterface extends QueueAdapterInterface
+class RabbitMQAdapterFactory implements FactoryInterface
 {
-    /**
-     * Receive a message.
-     *
-     * @param string $queueUrl
-     * @return Message
-     */
-    public function receiveMessage(string $queueUrl): ?Message;
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        /** @var QueueToolsConfig $config */
+        $config = $container->get(QueueToolsConfig::class);
+
+        return new RabbitMQAdapter($config->getHostname());
+    }
 }

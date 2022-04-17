@@ -13,10 +13,8 @@
 
 namespace BayWaReLusy\QueueTools\Adapter;
 
-use BayWaReLusy\QueueTools\Message;
-
 /**
- * PollingQueueAdapterInterface
+ * ConsumingQueueAdapterInterface
  *
  * @package     BayWaReLusy
  * @subpackage  Tools
@@ -25,13 +23,12 @@ use BayWaReLusy\QueueTools\Message;
  * @license     Unauthorized copying of this source code, via any medium is strictly
  *              prohibited, proprietary and confidential.
  */
-interface PollingQueueAdapterInterface extends QueueAdapterInterface
+interface ConsumingQueueAdapterInterface extends QueueAdapterInterface
 {
     /**
-     * Receive a message.
+     * Consume the queue.
      *
      * @param string $queueUrl
-     * @return Message
      */
-    public function receiveMessage(string $queueUrl): ?Message;
+    public function consumeQueue(string $queueUrl): void;
 }

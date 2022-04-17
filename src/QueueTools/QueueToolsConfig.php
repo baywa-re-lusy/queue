@@ -25,20 +25,18 @@ namespace BayWaReLusy\QueueTools;
  */
 class QueueToolsConfig
 {
-    protected ?string $awsRegion;
-    protected ?string $awsKey;
-    protected ?string $awsSecret;
-
     /**
-     * @param string $awsRegion
-     * @param string $awsKey
-     * @param string $awsSecret
+     * @param string|null $awsRegion
+     * @param string|null $awsKey
+     * @param string|null $awsSecret
+     * @param string|null $hostname
      */
-    public function __construct(string $awsRegion, string $awsKey, string $awsSecret)
-    {
-        $this->awsRegion = $awsRegion;
-        $this->awsKey    = $awsKey;
-        $this->awsSecret = $awsSecret;
+    public function __construct(
+        protected ?string $awsRegion,
+        protected ?string $awsKey,
+        protected ?string $awsSecret,
+        protected ?string $hostname
+    ) {
     }
 
     /**
@@ -63,5 +61,13 @@ class QueueToolsConfig
     public function getAwsSecret(): ?string
     {
         return $this->awsSecret;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHostname(): ?string
+    {
+        return $this->hostname;
     }
 }
