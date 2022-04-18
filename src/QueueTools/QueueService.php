@@ -13,6 +13,7 @@
 
 namespace BayWaReLusy\QueueTools;
 
+use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter\Message;
 use BayWaReLusy\QueueTools\Adapter\PollingQueueAdapterInterface;
 use BayWaReLusy\QueueTools\Adapter\QueueAdapterInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class QueueService
  *
  * @package     BayWaReLusy
- * @subpackage  Tools
+ * @subpackage  QueueTools
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly

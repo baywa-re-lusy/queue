@@ -29,13 +29,19 @@ class QueueToolsConfig
      * @param string|null $awsRegion
      * @param string|null $awsKey
      * @param string|null $awsSecret
-     * @param string|null $hostname
+     * @param string|null $amqpHostname
+     * @param int|null $amqpPort
+     * @param string|null $amqpUser
+     * @param string|null $amqpPassword
      */
     public function __construct(
         protected ?string $awsRegion,
         protected ?string $awsKey,
         protected ?string $awsSecret,
-        protected ?string $hostname
+        protected ?string $amqpHostname,
+        protected ?int $amqpPort,
+        protected ?string $amqpUser,
+        protected ?string $amqpPassword
     ) {
     }
 
@@ -66,8 +72,32 @@ class QueueToolsConfig
     /**
      * @return string|null
      */
-    public function getHostname(): ?string
+    public function getAmqpHostname(): ?string
     {
-        return $this->hostname;
+        return $this->amqpHostname;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getAmqpPort(): ?int
+    {
+        return $this->amqpPort;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAmqpUser(): ?string
+    {
+        return $this->amqpUser;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAmqpPassword(): ?string
+    {
+        return $this->amqpPassword;
     }
 }

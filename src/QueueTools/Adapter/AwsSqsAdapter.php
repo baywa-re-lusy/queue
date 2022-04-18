@@ -14,7 +14,7 @@
 namespace BayWaReLusy\QueueTools\Adapter;
 
 use Aws\Sqs\SqsClient;
-use BayWaReLusy\QueueTools\Message;
+use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter\Message;
 
 /**
  * AwsSqsAdapter

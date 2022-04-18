@@ -13,7 +13,7 @@
 
 namespace BayWaReLusy\QueueTools\Adapter;
 
-use BayWaReLusy\QueueTools\Message;
+use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter\Message;
 use BayWaReLusy\QueueTools\QueueException;
 
 /**

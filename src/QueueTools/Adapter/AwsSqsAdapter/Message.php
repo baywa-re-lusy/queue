@@ -11,13 +11,13 @@
  *            prohibited, proprietary and confidential.
  */
 
-namespace BayWaReLusy\QueueTools;
+namespace BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter;
 
 /**
  * Message
  *
  * @package     BayWaReLusy
- * @subpackage  Tools
+ * @subpackage  QueueTools
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * RabbitMQAdapter.php
+ * AmqpAdapter.php
  *
  * @date      18.04.2022
  * @author    Pascal Paulis <pascal.paulis@baywa-re.com>
- * @file      RabbitMQAdapter.php
+ * @file      AmqpAdapter.php
  * @copyright Copyright (c) BayWa r.e. - All rights reserved
  * @license   Unauthorized copying of this source code, via any medium is strictly
  *            prohibited, proprietary and confidential.
@@ -13,8 +13,7 @@
 
 namespace BayWaReLusy\QueueTools\Adapter;
 
-use BayWaReLusy\QueueTools\Message;
-use BayWaReLusy\QueueTools\QueueException;
+use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter\Message;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 /**
@@ -26,12 +25,14 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
  * @license    Unauthorized copying of this source code, via any medium is strictly
  *             prohibited, proprietary and confidential.
  */
-class RabbitMQAdapter implements ConsumingQueueAdapterInterface
+class AmqpAdapter implements ConsumingQueueAdapterInterface
 {
     public function __construct(
-        protected string $hostname
-    )
-    {
+        protected string $hostname,
+        protected int $port,
+        protected string $user,
+        protected string $password
+    ) {
     }
 
 
@@ -40,13 +41,12 @@ class RabbitMQAdapter implements ConsumingQueueAdapterInterface
      */
     public function consumeQueue(string $queueUrl, callable $callback): void
     {
-        $connection = new AMQPStreamConnection($this->hostname, 5672, 'guest', 'guest');
+        $connection = new AMQPStreamConnection($this->hostname, $this->port, $this->user, $this->password);
         $channel = $connection->channel();
         $channel->queue_declare($queueUrl, false, false, false, false);
         $channel->basic_consume($queueUrl, '', false, true, false, false, $callback);
 
         while ($channel->is_open()) {
-            echo 'test' . "\n";
             $channel->wait();
         }
     }

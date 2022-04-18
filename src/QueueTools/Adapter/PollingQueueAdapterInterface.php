@@ -13,13 +13,13 @@
 
 namespace BayWaReLusy\QueueTools\Adapter;
 
-use BayWaReLusy\QueueTools\Message;
+use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter\Message;
 
 /**
  * PollingQueueAdapterInterface
  *
  * @package     BayWaReLusy
- * @subpackage  Tools
+ * @subpackage  QueueTools
  * @author      Pascal Paulis <pascal.paulis@baywa-re.com>
  * @copyright   Copyright (c) BayWa r.e. - All rights reserved
  * @license     Unauthorized copying of this source code, via any medium is strictly
