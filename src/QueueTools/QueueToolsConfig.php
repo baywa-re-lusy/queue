@@ -28,17 +28,21 @@ class QueueToolsConfig
     protected ?string $awsRegion;
     protected ?string $awsKey;
     protected ?string $awsSecret;
+    protected ?string $queueEndPoint;
 
     /**
      * @param string $awsRegion
      * @param string $awsKey
      * @param string $awsSecret
      */
-    public function __construct(string $awsRegion, string $awsKey, string $awsSecret)
+    public function __construct(string $awsRegion, string $awsKey, string $awsSecret, string $queueEndPoint = null)
     {
         $this->awsRegion = $awsRegion;
         $this->awsKey    = $awsKey;
         $this->awsSecret = $awsSecret;
+        if ($queueEndPoint) {
+            $this->queueEndPoint = $queueEndPoint;
+        }
     }
 
     /**
@@ -63,5 +67,13 @@ class QueueToolsConfig
     public function getAwsSecret(): ?string
     {
         return $this->awsSecret;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQueueEndPoint(): ?string
+    {
+        return $this->queueEndPoint;
     }
 }
