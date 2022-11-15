@@ -6,8 +6,6 @@ use BayWaReLusy\QueueTools\Message;
 
 class AzureQueueAdapter implements PollingQueueAdapterInterface
 {
-
-
     public function receiveMessage(string $queueUrl): ?Message
     {
         // TODO: Implement receiveMessage() method.
