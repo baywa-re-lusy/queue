@@ -3,6 +3,7 @@
 namespace BayWaReLusy\QueueTools\Adapter;
 
 use BayWaReLusy\QueueTools\QueueToolsConfig;
+use Interop\Container\ContainerInterface;
 use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 class AzureQueueAdapterFactory implements FactoryInterface
