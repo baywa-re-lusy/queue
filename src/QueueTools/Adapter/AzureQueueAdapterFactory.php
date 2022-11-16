@@ -15,11 +15,11 @@ class AzureQueueAdapterFactory implements FactoryInterface
 
         return new AzureQueueAdapter(
             QueueRestProxy::createQueueService(sprintf(
-                "QueueEndpoint=[%s];SharedAccessSignature=[%s]",
+                "QueueEndpoint=%s;SharedAccessSignature=%s",
                 $config->getQueueEndPoint(),
                 $config->getAwsKey()
             )),
-            $config->getQueueEndPoint()
+            $config->getQueueName()
         );
     }
 }

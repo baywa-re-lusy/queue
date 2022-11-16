@@ -9,7 +9,7 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
 {
     public function __construct(
         protected QueueRestProxy $queueRestProxy,
-        protected string $queueUrl
+        protected string $queueName
     ) {
     }
 
@@ -23,7 +23,8 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         string $messageGroupId = null,
         string $messageDeduplicationId = null
     ): QueueAdapterInterface {
-        $this->queueRestProxy->createMessage($this->queueUrl, $messageBody);
+        $this->queueRestProxy->createMessage($this->queueName, $messageBody);
+        return $this;
     }
 
     public function deleteMessage(string $queueUrl, Message $message): QueueAdapterInterface
