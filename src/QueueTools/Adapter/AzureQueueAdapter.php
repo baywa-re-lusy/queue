@@ -23,7 +23,7 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         foreach ($messages as $message) {
             $msg = new Message();
             $msg->setBody($message->getMessageText());
-            $msg->setId($message->getId());
+            $msg->setId($message->getMessageId());
             $msg->setReceiptHandle($message->getPopReceipt());
             return $msg;
         }
