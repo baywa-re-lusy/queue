@@ -29,11 +29,11 @@ $queueService->setAdapter($queueTools->get(AwsSqsAdapter::class));
 
 ```php
 $queueToolsConfig = new QueueToolsConfig(
-<Unused for this adapter, fill with anything>,
-<The azure SAS Token>,
-<Unused for this adapter, fill with anything>,
-<The Queue's name'>,
-<The queue EndPoint (xxxxx.queue.core.windows.net)>
+        "<Unused for this adapter, fill with anything>",
+        "<The azure SAS Token>",
+        "<Unused for this adapter, fill with anything>",
+        "<The Queue's name'>",
+        "<The queue EndPoint (xxxxx.queue.core.windows.net)">
 );
 $queueTools       = new QueueTools($queueToolsConfig);
 $queueService     = $queueTools->get(QueueService::class);
