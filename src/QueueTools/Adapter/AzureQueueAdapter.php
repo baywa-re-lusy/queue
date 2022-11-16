@@ -15,6 +15,20 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
 
     public function receiveMessage(string $queueUrl): ?Message
     {
+        $listMessagesResult = $this->queueRestProxy->listMessages(
+            $this->queueName
+        );
+        $messages = $listMessagesResult->getQueueMessages();
+
+        foreach ($messages as $message) {
+            $msg = new Message();
+            $msg->setBody($message->getMessageText());
+            $msg->setId($message->getId());
+            $msg->setReceiptHandle($message->getPopReceipt());
+            return $msg;
+        }
+
+        return null;
     }
 
     public function sendMessage(
@@ -27,8 +41,15 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         return $this;
     }
 
+    /**
+     * @param string $queueUrl
+     * @param Message $message
+     * @return QueueAdapterInterface
+     * @throws \Exception
+     */
     public function deleteMessage(string $queueUrl, Message $message): QueueAdapterInterface
     {
-        // TODO: Implement deleteMessage() method.
+        $this->queueRestProxy->deleteMessage($queueUrl, $message->getId(), $message->getReceiptHandle());
+        return $this;
     }
 }
