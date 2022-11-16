@@ -13,7 +13,7 @@ composer require baywa-re-lusy/queue
 
 ## Usage
 
-Currently, this library only supports AWS SQS. However, it uses an Adapter pattern to allow adding other vendors easily.
+Currently, this library supports AWS SQS and Azure Queue. However, it uses an Adapter pattern to allow adding other vendors easily.
 
 ```php
 use BayWaReLusy\QueueTools\QueueToolsConfig;
@@ -24,11 +24,26 @@ use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter;
 $queueToolsConfig = new QueueToolsConfig($awsRegion, $awsKey, $awsSecret);
 $queueTools       = new QueueTools($queueToolsConfig);
 $queueService     = $queueTools->get(QueueService::class);
-$queueService->setAdapter($emailTools->get(AwsSqsAdapter::class));
+$queueService->setAdapter($queueTools->get(AwsSqsAdapter::class));
 ```
+
+```php
+$queueToolsConfig = new QueueToolsConfig(
+<Unused for this adapter, fill with anything>,
+<The azure SAS Token>,
+<Unused for this adapter, fill with anything>,
+<The Queue's name'>,
+<The queue EndPoint (xxxxx.queue.core.windows.net)>
+);
+$queueTools       = new QueueTools($queueToolsConfig);
+$queueService     = $queueTools->get(QueueService::class);
+$queueService->setAdapter($queueTools->get(AzureQueueAdapter::class));
+```
+
 
 Optionally, you can include then the Queue Client into your Service Manager:
 
 ```php
 $sm->setService(QueueTools::class, $queueTools);
 ```
+
