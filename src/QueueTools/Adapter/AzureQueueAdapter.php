@@ -37,6 +37,7 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         string $messageGroupId = null,
         string $messageDeduplicationId = null
     ): QueueAdapterInterface {
+        $this->queueRestProxy->createQueue($this->queueName);
         $this->queueRestProxy->createMessage($this->queueName, $messageBody);
         return $this;
     }
