@@ -16,7 +16,7 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
     public function receiveMessage(string $queueUrl): ?Message
     {
         $listMessagesResult = $this->queueRestProxy->listMessages(
-            $this->queueName
+            $queueUrl
         );
         $messages = $listMessagesResult->getQueueMessages();
 
