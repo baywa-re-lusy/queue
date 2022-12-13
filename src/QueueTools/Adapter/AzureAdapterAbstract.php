@@ -9,7 +9,7 @@ abstract class AzureAdapterAbstract implements PollingQueueAdapterInterface
 {
     protected ?QueueRestProxy $queueRestProxy = null;
 
-    abstract function getQueueRestProxy(): QueueRestProxy;
+    abstract public function getQueueRestProxy(): QueueRestProxy;
     public function receiveMessage(string $queueUrl): ?Message
     {
         $listMessagesResult = $this->getQueueRestProxy()->listMessages(
