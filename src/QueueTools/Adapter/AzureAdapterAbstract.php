@@ -7,15 +7,16 @@ use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 abstract class AzureAdapterAbstract implements PollingQueueAdapterInterface
 {
-    public function __construct(
-        protected QueueRestProxy $queueRestProxy,
-        protected string $queueName
-    ) {
-    }
-
+    protected ?QueueRestProxy $queueRestProxy = null;
+//    public function __construct(
+//        protected QueueRestProxy $queueRestProxy,
+//        protected string $queueName
+//    ) {
+//    }
+    protected abstract function getQueueRestProxy();
     public function receiveMessage(string $queueUrl): ?Message
     {
-        $listMessagesResult = $this->queueRestProxy->listMessages(
+        $listMessagesResult = $this->getQueueRestProxy()->listMessages(
             $queueUrl
         );
         $messages = $listMessagesResult->getQueueMessages();
@@ -37,8 +38,8 @@ abstract class AzureAdapterAbstract implements PollingQueueAdapterInterface
         string $messageGroupId = null,
         string $messageDeduplicationId = null
     ): AzureAdapterAbstract {
-        $this->queueRestProxy->createQueue($queueUrl);
-        $this->queueRestProxy->createMessage($queueUrl, $messageBody);
+        $this->getQueueRestProxy()->createQueue($queueUrl);
+        $this->getQueueRestProxy()->createMessage($queueUrl, $messageBody);
         return $this;
     }
 
@@ -50,7 +51,7 @@ abstract class AzureAdapterAbstract implements PollingQueueAdapterInterface
      */
     public function deleteMessage(string $queueUrl, Message $message): AzureAdapterAbstract
     {
-        $this->queueRestProxy->deleteMessage($queueUrl, $message->getId(), $message->getReceiptHandle());
+        $this->getQueueRestProxy()->deleteMessage($queueUrl, $message->getId(), $message->getReceiptHandle());
         return $this;
     }
 }
