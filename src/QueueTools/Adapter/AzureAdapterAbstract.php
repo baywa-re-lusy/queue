@@ -8,12 +8,8 @@ use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 abstract class AzureAdapterAbstract implements PollingQueueAdapterInterface
 {
     protected ?QueueRestProxy $queueRestProxy = null;
-//    public function __construct(
-//        protected QueueRestProxy $queueRestProxy,
-//        protected string $queueName
-//    ) {
-//    }
-    protected abstract function getQueueRestProxy();
+
+    protected abstract function getQueueRestProxy(): QueueRestProxy;
     public function receiveMessage(string $queueUrl): ?Message
     {
         $listMessagesResult = $this->getQueueRestProxy()->listMessages(
