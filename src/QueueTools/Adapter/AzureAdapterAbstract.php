@@ -3,6 +3,7 @@
 namespace BayWaReLusy\QueueTools\Adapter;
 
 use BayWaReLusy\QueueTools\Message;
+use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 abstract class AzureAdapterAbstract implements PollingQueueAdapterInterface
 {
