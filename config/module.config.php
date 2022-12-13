@@ -13,13 +13,9 @@ return [
         [
             'invokables' =>
                 [
-                    QueueService::class
                 ],
             'factories' =>
                 [
-                    AwsSqsAdapter::class => AwsSqsAdapterFactory::class,
-                    AzureQueueAdapter::class => AzureQueueAdapterFactory::class,
-                    AzuriteAdapter::class => AzuriteAdapterFactory::class
                 ],
             'abstract_factories' =>
                 [

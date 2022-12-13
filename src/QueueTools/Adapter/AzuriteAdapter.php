@@ -16,7 +16,7 @@ class AzuriteAdapter extends AzureAdapterAbstract
 
     public function getQueueEndpoint(): string
     {
-        return sprintf("%s:%s", rtrim($this->queueHostname, '/'), $this->queuePort);
+        return sprintf("%s:%s/%s", rtrim($this->queueHostname, '/'), $this->queuePort, $this->accountName);
     }
 
     /**
