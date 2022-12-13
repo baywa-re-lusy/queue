@@ -14,6 +14,7 @@ class AzuriteAdapter extends AzureAdapterAbstract
         protected string $queuePort = "10001",
         protected string $accountName = "devstoreaccount1"
     ) {
+        $this->accountKey = $accountKey;
     }
 
     public function getQueueEndpoint(): string
