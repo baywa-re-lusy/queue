@@ -22,7 +22,7 @@ class AzuriteAdapter extends AzureAdapterAbstract
     /**
      * @return QueueRestProxy
      */
-    public function getQueueRestProxy()
+    public function getQueueRestProxy(): QueueRestProxy
     {
         if (!$this->queueRestProxy) {
             $this->queueRestProxy = QueueRestProxy::createQueueService(

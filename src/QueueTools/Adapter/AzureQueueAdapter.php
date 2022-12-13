@@ -13,9 +13,9 @@ class AzureQueueAdapter extends AzureAdapterAbstract
     }
 
     /**
-     * @return QueueRestProxy|null
+     * @return QueueRestProxy
      */
-    public function getQueueRestProxy(): ?QueueRestProxy
+    public function getQueueRestProxy(): QueueRestProxy
     {
         if (!$this->queueRestProxy) {
             $this->queueRestProxy = QueueRestProxy::createQueueService(sprintf(
