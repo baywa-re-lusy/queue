@@ -6,8 +6,10 @@ use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
 class AzuriteAdapter extends AzureAdapterAbstract
 {
+    protected string $accountKey;
+
     public function __construct(
-        protected string $accountKey = "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
+        string $accountKey = "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
         protected string $queueHostname = "http://172.17.0.1",
         protected string $queuePort = "10001",
         protected string $accountName = "devstoreaccount1"
