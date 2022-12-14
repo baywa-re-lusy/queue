@@ -29,7 +29,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueService
 {
-    protected QueueAdapterInterface $adapter;
+    /**
+     * @param QueueAdapterInterface $adapter
+     */
+    public function __construct(
+        protected QueueAdapterInterface $adapter
+    ) {
+    }
+
     protected ?OutputInterface $output = null;
 
     /**

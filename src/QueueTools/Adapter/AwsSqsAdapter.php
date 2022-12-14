@@ -27,15 +27,38 @@ use BayWaReLusy\QueueTools\Message;
  */
 class AwsSqsAdapter implements PollingQueueAdapterInterface
 {
-    protected SqsClient $sqsClient;
+    protected ?SqsClient $sqsClient = null;
 
     /**
      * AwsSqsAdapter constructor.
-     * @param SqsClient $sqsClient
+     * @param string $awsRegion
+     * @param string $awsKey
+     * @param string $awsSecret
      */
-    public function __construct(SqsClient $sqsClient)
+    public function __construct(
+        protected string $awsRegion,
+        protected string $awsKey,
+        protected string $awsSecret
+    ) {
+    }
+
+    private function getSqsClient(): SqsClient
     {
-        $this->sqsClient = $sqsClient;
+        if (!$this->sqsClient) {
+            $parameters = array_merge(
+                ['version' => '2012-11-05'],
+                [
+                    'region'      => $this->awsRegion,
+                    'credentials' =>
+                        [
+                            'key'    => $this->awsKey,
+                            'secret' => $this->awsSecret
+                        ]
+                ]
+            );
+            $this->sqsClient = new SqsClient($parameters);
+        }
+        return $this->sqsClient;
     }
 
     /**
@@ -61,7 +84,7 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
             $params['MessageDeduplicationId'] = $messageDeduplicationId;
         }
 
-        $this->sqsClient->sendMessage($params);
+        $this->getSqsClient()->sendMessage($params);
 
         return $this;
     }
@@ -71,7 +94,7 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
      */
     public function receiveMessage(string $queueUrl): ?Message
     {
-        $result = $this->sqsClient->receiveMessage(['QueueUrl' => $queueUrl]);
+        $result = $this->getSqsClient()->receiveMessage(['QueueUrl' => $queueUrl]);
 
         if (!empty($result['Messages'])) {
             // By default, only one message will be returned
@@ -92,7 +115,7 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
      */
     public function deleteMessage(string $queueUrl, Message $message): QueueAdapterInterface
     {
-        $this->sqsClient->deleteMessage([
+        $this->getSqsClient()->deleteMessage([
             'QueueUrl'      => $queueUrl,
             'ReceiptHandle' => $message->getReceiptHandle()
         ]);
