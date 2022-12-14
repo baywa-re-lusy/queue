@@ -8,7 +8,7 @@ use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 class AzureQueueAdapter implements PollingQueueAdapterInterface
 {
     protected string $accountKey;
-    //we either give a sastoken or an account key, and use queue end point to determine if we're testing or not
+
     public function __construct(
         protected string $queueEndPoint,
         protected ?string $sasToken = null,
@@ -23,7 +23,6 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
      */
     public function getQueueRestProxy(): QueueRestProxy
     {
-        //We need to call azurite or azure depending on the given config
         if (!$this->queueRestProxy) {
             //if the url contains the official azure's URL
             if (str_contains($this->queueEndPoint, "core.windows.net")) {
