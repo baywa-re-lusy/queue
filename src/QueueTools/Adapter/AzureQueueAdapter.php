@@ -10,11 +10,11 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
     protected string $accountKey;
 
     public function __construct(
-        protected string $queueEndPoint,
+        protected string  $queueEndPoint,
         protected ?string $sasToken = null,
-        string $accountKey = "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
-        protected string $accountName = "devstoreaccount1"
-) {
+        string            $accountKey = "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
+        protected string  $accountName = "devstoreaccount1"
+    ) {
         $this->accountKey = $accountKey;
     }
 
@@ -41,12 +41,12 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
                     )
                 );
             }
-
         }
         return $this->queueRestProxy;
     }
 
     protected ?QueueRestProxy $queueRestProxy = null;
+
     public function receiveMessage(string $queueUrl): ?Message
     {
         $listMessagesResult = $this->getQueueRestProxy()->listMessages(
@@ -70,7 +70,8 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         string $messageBody,
         string $messageGroupId = null,
         string $messageDeduplicationId = null
-    ): AzureQueueAdapter {
+    ): AzureQueueAdapter
+    {
         $this->getQueueRestProxy()->createQueue($queueUrl);
         $this->getQueueRestProxy()->createMessage($queueUrl, $messageBody);
         return $this;
