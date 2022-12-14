@@ -71,7 +71,7 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         string $messageBody,
         string $messageGroupId = null,
         string $messageDeduplicationId = null
-    ): AzureAdapterAbstract {
+    ): AzureQueueAdapter {
         $this->getQueueRestProxy()->createQueue($queueUrl);
         $this->getQueueRestProxy()->createMessage($queueUrl, $messageBody);
         return $this;
@@ -80,10 +80,10 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
     /**
      * @param string $queueUrl
      * @param Message $message
-     * @return AzureAdapterAbstract
+     * @return AzureQueueAdapter
      * @throws \Exception
      */
-    public function deleteMessage(string $queueUrl, Message $message): AzureAdapterAbstract
+    public function deleteMessage(string $queueUrl, Message $message): AzureQueueAdapter
     {
         $this->getQueueRestProxy()->deleteMessage($queueUrl, $message->getId(), $message->getReceiptHandle());
         return $this;
