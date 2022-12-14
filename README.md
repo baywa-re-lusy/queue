@@ -15,35 +15,39 @@ composer require baywa-re-lusy/queue
 
 Currently, this library supports AWS SQS and Azure Queue. However, it uses an Adapter pattern to allow adding other vendors easily.
 
+#### AWS
 ```php
-use BayWaReLusy\QueueTools\QueueToolsConfig;
-use BayWaReLusy\QueueTools\QueueTools;
 use BayWaReLusy\QueueTools\QueueService;
 use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter;
 
-$queueToolsConfig = new QueueToolsConfig($awsRegion, $awsKey, $awsSecret);
-$queueTools       = new QueueTools($queueToolsConfig);
-$queueService     = $queueTools->get(QueueService::class);
-$queueService->setAdapter($queueTools->get(AwsSqsAdapter::class));
+$adapter = new AwsSqsAdapter($awsRegion, $awsKey, $awsSecret);
+$queueService = new QueueService($adapter);
+```
+#### Azure
+```php
+use BayWaReLusy\QueueTools\QueueService;
+use BayWaReLusy\QueueTools\Adapter\AzureQueueAdapter;
+
+$adapter = new AzureQueueAdapter($sasToken, $queueEndpoint);
+$queueService = new QueueService($adapter);
 ```
 
+There also is an Azurite adapter for local testing of the Azure Queue
+
 ```php
-$queueToolsConfig = new QueueToolsConfig(
-        "<Unused for this adapter, fill with anything>",
-        "<The azure SAS Token>",
-        "<Unused for this adapter, fill with anything>",
-        "<The Queue's name'>",
-        "<The queue EndPoint (xxxxx.queue.core.windows.net)">
-);
-$queueTools       = new QueueTools($queueToolsConfig);
-$queueService     = $queueTools->get(QueueService::class);
-$queueService->setAdapter($queueTools->get(AzureQueueAdapter::class));
+use BayWaReLusy\QueueTools\QueueService;
+use BayWaReLusy\QueueTools\Adapter\AzuriteAdapter;
+
+$adapter = new AzuriteAdapter();
+$queueService = new QueueService($adapter);
 ```
+The adapter takes 4 optionals parameters, if the config varies from the default, it must be given in the constructor
 
-
-Optionally, you can include then the Queue Client into your Service Manager:
-
+Here are the default values
 ```php
-$sm->setService(QueueTools::class, $queueTools);
+string $accountKey = "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
+string $queueHostname = "http://172.17.0.1",
+string $queuePort = "10001",
+string $accountName = "devstoreaccount1"
 ```
 
