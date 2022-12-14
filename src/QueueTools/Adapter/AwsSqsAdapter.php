@@ -42,7 +42,7 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
     ) {
     }
 
-    public function getSqsClient(): SqsClient
+    private function getSqsClient(): SqsClient
     {
         if (!$this->sqsClient) {
             $parameters = array_merge(
