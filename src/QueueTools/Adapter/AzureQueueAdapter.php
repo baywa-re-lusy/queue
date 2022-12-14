@@ -5,7 +5,7 @@ namespace BayWaReLusy\QueueTools\Adapter;
 use BayWaReLusy\QueueTools\Message;
 use MicrosoftAzure\Storage\Queue\QueueRestProxy;
 
-class AzureQueueAdapter
+class AzureQueueAdapter implements PollingQueueAdapterInterface
 {
     protected string $accountKey;
     //we either give a sastoken or an account key, and use queue end point to determine if we're testing or not
