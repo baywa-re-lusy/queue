@@ -28,26 +28,9 @@ $queueService = new QueueService($adapter);
 use BayWaReLusy\QueueTools\QueueService;
 use BayWaReLusy\QueueTools\Adapter\AzureQueueAdapter;
 
-$adapter = new AzureQueueAdapter($sasToken, $queueEndpoint);
+$adapter = new AzureQueueAdapter($queueEndpoint, $sasToken);
 $queueService = new QueueService($adapter);
 ```
 
-There also is an Azurite adapter for local testing of the Azure Queue
-
-```php
-use BayWaReLusy\QueueTools\QueueService;
-use BayWaReLusy\QueueTools\Adapter\AzuriteAdapter;
-
-$adapter = new AzuriteAdapter();
-$queueService = new QueueService($adapter);
-```
-The adapter takes 4 optionals parameters, if the config varies from the default, it must be given in the constructor
-
-Here are the default values
-```php
-string $accountKey = "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
-string $queueHostname = "http://172.17.0.1",
-string $queuePort = "10001",
-string $accountName = "devstoreaccount1"
-```
-
+If the queue Endpoint doesn't refer to azure (xxx.core.windows.net), it will use the local instance of Azurite instead 
+with default values
