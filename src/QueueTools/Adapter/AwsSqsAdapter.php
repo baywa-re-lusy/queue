@@ -42,7 +42,6 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
     ) {
     }
 
-
     public function getSqsClient(): SqsClient
     {
         if (!$this->sqsClient) {
