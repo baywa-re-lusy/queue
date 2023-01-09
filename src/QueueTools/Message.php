@@ -25,8 +25,27 @@ namespace BayWaReLusy\QueueTools;
  */
 class Message
 {
+    protected ?string $id = null;
     protected string $body;
     protected string $receiptHandle;
+
+    /**
+     * @return string|null
+     */
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string|null $id
+     * @return Message
+     */
+    public function setId(?string $id): Message
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return string
