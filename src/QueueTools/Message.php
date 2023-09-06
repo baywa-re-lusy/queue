@@ -28,6 +28,7 @@ class Message
     protected ?string $id = null;
     protected string $body;
     protected string $receiptHandle;
+    protected ?\DateTime $insertionDate = null;
 
     /**
      * @return string|null
@@ -81,5 +82,21 @@ class Message
     {
         $this->receiptHandle = $receiptHandle;
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getInsertionDate(): \DateTime
+    {
+        return $this->insertionDate;
+    }
+
+    /**
+     * @param \DateTime $insertionDate
+     */
+    public function setInsertionDate(\DateTime $insertionDate): void
+    {
+        $this->insertionDate = $insertionDate;
     }
 }

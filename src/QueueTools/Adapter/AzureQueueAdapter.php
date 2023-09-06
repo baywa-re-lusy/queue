@@ -60,6 +60,7 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
             $msg->setBody($message->getMessageText());
             $msg->setId($message->getMessageId());
             $msg->setReceiptHandle($message->getPopReceipt());
+            $msg->setInsertionDate($message->getInsertionDate());
             return $msg;
         }
 
