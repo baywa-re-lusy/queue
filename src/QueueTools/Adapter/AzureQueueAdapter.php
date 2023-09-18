@@ -34,10 +34,11 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
             } else {
                 $this->queueRestProxy = QueueRestProxy::createQueueService(
                     sprintf(
-                        "DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s;QueueEndpoint=%s",
+                        "DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s;QueueEndpoint=%s/%s",
                         $this->accountName,
                         $this->accountKey,
-                        $this->queueEndPoint
+                        $this->queueEndPoint,
+                        $this->accountName
                     )
                 );
             }
@@ -59,6 +60,7 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
             $msg->setBody($message->getMessageText());
             $msg->setId($message->getMessageId());
             $msg->setReceiptHandle($message->getPopReceipt());
+            $msg->setInsertionDate($message->getInsertionDate());
             return $msg;
         }
 
