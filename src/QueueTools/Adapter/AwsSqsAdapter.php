@@ -116,7 +116,7 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
     public function deleteMessage(string $queueUrl, Message $message): QueueAdapterInterface
     {
         $this->getSqsClient()->deleteMessage([
-            'QueueUrl' => $queueUrl,
+            'QueueUrl'      => $queueUrl,
             'ReceiptHandle' => $message->getReceiptHandle()
         ]);
 
