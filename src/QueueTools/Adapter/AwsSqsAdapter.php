@@ -48,10 +48,10 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
             $parameters = array_merge(
                 ['version' => '2012-11-05'],
                 [
-                    'region' => $this->awsRegion,
+                    'region'      => $this->awsRegion,
                     'credentials' =>
                         [
-                            'key' => $this->awsKey,
+                            'key'    => $this->awsKey,
                             'secret' => $this->awsSecret
                         ]
                 ]
@@ -72,7 +72,7 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
     ): QueueAdapterInterface {
         $params =
             [
-                'QueueUrl' => $queueUrl,
+                'QueueUrl'    => $queueUrl,
                 'MessageBody' => $messageBody,
             ];
 
@@ -136,8 +136,8 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
         int $visibilityTimeout
     ): QueueAdapterInterface {
         $this->sqsClient->changeMessageVisibility([
-            'QueueUrl' => $queueUrl,
-            'ReceiptHandle' => $message->getReceiptHandle(),
+            'QueueUrl'          => $queueUrl,
+            'ReceiptHandle'     => $message->getReceiptHandle(),
             'VisibilityTimeout' => $visibilityTimeout
         ]);
 
