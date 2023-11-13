@@ -124,11 +124,7 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
     }
 
     /**
-     * Set the visibility timeout of a message to $visibilityTimeout seconds starting this call
-     * @param string $queueUrl
-     * @param Message $message
-     * @param int $visibilityTimeout
-     * @return QueueAdapterInterface
+     * @inheritdoc
      */
     public function changeMessageVisibility(
         string $queueUrl,
