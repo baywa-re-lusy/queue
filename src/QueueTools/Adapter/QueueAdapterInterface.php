@@ -51,4 +51,17 @@ interface QueueAdapterInterface
      * @return $this
      */
     public function deleteMessage(string $queueUrl, Message $message): QueueAdapterInterface;
+
+    /**
+     * Set the visibility timeout of a message to $visibilityTimeout seconds starting this call
+     * @param string $queueUrl
+     * @param Message $message
+     * @param int $visibilityTimeout
+     * @return $this
+     */
+    public function changeMessageVisibility(
+        string $queueUrl,
+        Message $message,
+        int $visibilityTimeout
+    ): QueueAdapterInterface;
 }

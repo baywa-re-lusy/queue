@@ -89,4 +89,15 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         $this->getQueueRestProxy()->deleteMessage($queueUrl, $message->getId(), $message->getReceiptHandle());
         return $this;
     }
+
+    /**
+     * @throws \Exception
+     */
+    public function changeMessageVisibility(
+        string $queueUrl,
+        Message $message,
+        int $visibilityTimeout
+    ): QueueAdapterInterface {
+        throw new \Exception('Not yet implemented');
+    }
 }
