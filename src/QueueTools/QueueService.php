@@ -144,4 +144,33 @@ class QueueService
 
         return $this;
     }
+
+    /**
+     * Set the visibility timeout of a message to $visibilityTimeout seconds starting this call
+     * @param string $queueUrl
+     * @param Message $message
+     * @param int $visibilityTimeout
+     * @return $this
+     */
+    public function changeMessageVisibility(
+        string $queueUrl,
+        Message $message,
+        int $visibilityTimeout
+    ) {
+        if ($this->output) {
+            $this->output->writeln(
+                sprintf(
+                    "[%s] Change message %s visibility on queue %s for %s seconds",
+                    (new \DateTime())->format('c'),
+                    $message->getReceiptHandle(),
+                    $queueUrl,
+                    $visibilityTimeout
+                )
+            );
+        }
+
+        $this->getAdapter()->changeMessageVisibility($queueUrl, $message, $visibilityTimeout);
+
+        return $this;
+    }
 }
