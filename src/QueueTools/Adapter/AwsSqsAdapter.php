@@ -34,30 +34,37 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
      * @param string $awsRegion
      * @param string $awsKey
      * @param string $awsSecret
+     * @param string|null $sqsEndpoint
      */
     public function __construct(
         protected string $awsRegion,
         protected string $awsKey,
-        protected string $awsSecret
+        protected string $awsSecret,
+        protected ?string $sqsEndpoint = null
     ) {
     }
 
     private function getSqsClient(): SqsClient
     {
         if (!$this->sqsClient) {
-            $parameters = array_merge(
-                ['version' => '2012-11-05'],
+            $parameters =
                 [
+                    'version'     => '2012-11-05',
                     'region'      => $this->awsRegion,
                     'credentials' =>
                         [
                             'key'    => $this->awsKey,
                             'secret' => $this->awsSecret
                         ]
-                ]
-            );
+                ];
+
+            if (!is_null($this->sqsEndpoint)) {
+                $parameters['endpoint'] = $this->sqsEndpoint;
+            }
+
             $this->sqsClient = new SqsClient($parameters);
         }
+
         return $this->sqsClient;
     }
 
