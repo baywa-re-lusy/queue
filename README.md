@@ -20,9 +20,11 @@ Currently, this library supports AWS SQS and Azure Queue. However, it uses an Ad
 use BayWaReLusy\QueueTools\QueueService;
 use BayWaReLusy\QueueTools\Adapter\AwsSqsAdapter;
 
-$adapter = new AwsSqsAdapter($awsRegion, $awsKey, $awsSecret);
+$adapter = new AwsSqsAdapter($awsRegion, $awsKey, $awsSecret, $sqsEndpoint);
 $queueService = new QueueService($adapter);
 ```
+The SQS endpoint is optional and is only necessary for non-AWS SQS-providers (like ElasticMQ).
+
 #### Azure
 ```php
 use BayWaReLusy\QueueTools\QueueService;
