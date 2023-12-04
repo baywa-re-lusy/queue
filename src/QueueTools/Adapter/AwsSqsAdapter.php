@@ -129,4 +129,21 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
 
         return $this;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function changeMessageVisibility(
+        string $queueUrl,
+        Message $message,
+        int $visibilityTimeout
+    ): QueueAdapterInterface {
+        $this->sqsClient->changeMessageVisibility([
+            'QueueUrl'          => $queueUrl,
+            'ReceiptHandle'     => $message->getReceiptHandle(),
+            'VisibilityTimeout' => $visibilityTimeout
+        ]);
+
+        return $this;
+    }
 }
