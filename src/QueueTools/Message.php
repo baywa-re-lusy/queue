@@ -29,6 +29,7 @@ class Message
     protected string $body;
     protected string $receiptHandle;
     protected ?\DateTime $insertionDate = null;
+    protected ?int $dequeueCount = null;
 
     /**
      * @return string|null
@@ -98,5 +99,22 @@ class Message
     public function setInsertionDate(\DateTime $insertionDate): void
     {
         $this->insertionDate = $insertionDate;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDequeueCount(): ?int
+    {
+        return $this->dequeueCount;
+    }
+
+    /**
+     * @param int|null $dequeueCount
+     * @return void
+     */
+    public function setDequeueCount(?int $dequeueCount): void
+    {
+        $this->dequeueCount = $dequeueCount;
     }
 }
