@@ -110,7 +110,6 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
             // By default, only one message will be returned
             foreach ($result['Messages'] as $message) {
                 $newMessage = new Message();
-
                 $newMessage
                     ->setBody($message['Body'])
                     ->setReceiptHandle($message['ReceiptHandle']);
