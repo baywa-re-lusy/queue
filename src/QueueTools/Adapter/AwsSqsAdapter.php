@@ -117,9 +117,9 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
                 if (isset($message["Attributes"])) {
                     $sentDate = new \DateTime();
                     // The given timestamp is in millisecond
-                    $sentDate->setTimestamp(intval($message["attributes"]["SentTimestamp"]) / 1000);
+                    $sentDate->setTimestamp(intval($message["Attributes"]["SentTimestamp"]) / 1000);
                     $newMessage
-                        ->setDequeueCount($message["attributes"]["ApproximateReceiveCount"])
+                        ->setDequeueCount($message["Attributes"]["ApproximateReceiveCount"])
                         ->setInsertionDate($sentDate);
                 }
                 return $newMessage;
