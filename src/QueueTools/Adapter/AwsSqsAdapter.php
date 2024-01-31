@@ -100,9 +100,13 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
             // By default, only one message will be returned
             foreach ($result['Messages'] as $message) {
                 $newMessage = new Message();
+                $sentDate = new \DateTime();
+                $sentDate->setTimestamp($message["attributes"]["SentTimestamp"]);
                 $newMessage
                     ->setBody($message['Body'])
-                    ->setReceiptHandle($message['ReceiptHandle']);
+                    ->setReceiptHandle($message['ReceiptHandle'])
+                    ->setDequeueCount($message["attributes"]["ApproximateReceiveCount"])
+                    ->setInsertionDate($sentDate);
                 return $newMessage;
             }
         }

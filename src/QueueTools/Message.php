@@ -111,10 +111,11 @@ class Message
 
     /**
      * @param int|null $dequeueCount
-     * @return void
+     * @return self
      */
-    public function setDequeueCount(?int $dequeueCount): void
+    public function setDequeueCount(?int $dequeueCount): Message
     {
         $this->dequeueCount = $dequeueCount;
+        return $this;
     }
 }
