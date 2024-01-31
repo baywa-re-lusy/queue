@@ -101,19 +101,27 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
      */
     public function receiveMessage(string $queueUrl): ?Message
     {
-        $result = $this->getSqsClient()->receiveMessage(['QueueUrl' => $queueUrl]);
-
+        // Parameter should be MessageAttributeNames in newer version, AttributeNames should still be supported, see
+        // https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html
+        $result = $this->getSqsClient()->receiveMessage(
+            ['QueueUrl' => $queueUrl, "AttributeNames" => ["SentTimestamp", "ApproximateReceiveCount"]]
+        );
         if (!empty($result['Messages'])) {
             // By default, only one message will be returned
             foreach ($result['Messages'] as $message) {
                 $newMessage = new Message();
-                $sentDate = new \DateTime();
-                $sentDate->setTimestamp($message["attributes"]["SentTimestamp"]);
+
                 $newMessage
                     ->setBody($message['Body'])
-                    ->setReceiptHandle($message['ReceiptHandle'])
-                    ->setDequeueCount($message["attributes"]["ApproximateReceiveCount"])
-                    ->setInsertionDate($sentDate);
+                    ->setReceiptHandle($message['ReceiptHandle']);
+                if (isset($message["Attributes"])) {
+                    $sentDate = new \DateTime();
+                    // The given timestamp is in millisecond
+                    $sentDate->setTimestamp(intval($message["attributes"]["SentTimestamp"]) / 1000);
+                    $newMessage
+                        ->setDequeueCount($message["attributes"]["ApproximateReceiveCount"])
+                        ->setInsertionDate($sentDate);
+                }
                 return $newMessage;
             }
         }
