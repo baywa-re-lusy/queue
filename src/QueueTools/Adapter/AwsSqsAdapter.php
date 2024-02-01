@@ -101,7 +101,17 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
      */
     public function receiveMessage(string $queueUrl): ?Message
     {
-        $result = $this->getSqsClient()->receiveMessage(['QueueUrl' => $queueUrl]);
+        // Parameter should be "MessageAttributeNames" (instead of "AttributeNames") in newer version :
+        // https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html
+        // However, due to a problem in the SQS API, "MessageAttributeNames" isn't available yet.
+        $result = $this->getSqsClient()->receiveMessage([
+            'QueueUrl' => $queueUrl,
+            'AttributeNames' =>
+                [
+                    'SentTimestamp',
+                    'ApproximateReceiveCount'
+                ]
+        ]);
 
         if (!empty($result['Messages'])) {
             // By default, only one message will be returned
@@ -109,7 +119,14 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
                 $newMessage = new Message();
                 $newMessage
                     ->setBody($message['Body'])
-                    ->setReceiptHandle($message['ReceiptHandle']);
+                    ->setReceiptHandle($message['ReceiptHandle'])
+                    ->setDequeueCount($message['Attributes']['ApproximateReceiveCount'])
+                    ->setInsertionDate(
+                        (new \DateTime())->setTimestamp(
+                            intdiv(intval($message['Attributes']['SentTimestamp']), 1000)
+                        )
+                    );
+
                 return $newMessage;
             }
         }
