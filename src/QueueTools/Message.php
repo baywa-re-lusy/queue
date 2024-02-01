@@ -28,8 +28,8 @@ class Message
     protected ?string $id = null;
     protected string $body;
     protected string $receiptHandle;
-    protected ?\DateTime $insertionDate = null;
-    protected ?int $dequeueCount = null;
+    protected \DateTime $insertionDate;
+    protected int $dequeueCount;
 
     /**
      * @return string|null
@@ -102,18 +102,18 @@ class Message
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getDequeueCount(): ?int
+    public function getDequeueCount(): int
     {
         return $this->dequeueCount;
     }
 
     /**
-     * @param int|null $dequeueCount
-     * @return self
+     * @param int $dequeueCount
+     * @return Message
      */
-    public function setDequeueCount(?int $dequeueCount): Message
+    public function setDequeueCount(int $dequeueCount): Message
     {
         $this->dequeueCount = $dequeueCount;
         return $this;

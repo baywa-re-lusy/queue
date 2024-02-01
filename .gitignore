@@ -3,3 +3,5 @@ results/
 results/*
 vendor
 .idea
+.phpunit.result.cache
+.phpunit.cache

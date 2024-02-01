@@ -101,26 +101,32 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
      */
     public function receiveMessage(string $queueUrl): ?Message
     {
-        // Parameter should be MessageAttributeNames in newer version, AttributeNames should still be supported, see
+        // Parameter should be "MessageAttributeNames" (instead of "AttributeNames") in newer version :
         // https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html
-        $result = $this->getSqsClient()->receiveMessage(
-            ['QueueUrl' => $queueUrl, "AttributeNames" => ["SentTimestamp", "ApproximateReceiveCount"]]
-        );
+        // However, due to a problem in the SQS API, "MessageAttributeNames" isn't available yet.
+        $result = $this->getSqsClient()->receiveMessage([
+            'QueueUrl' => $queueUrl,
+            'AttributeNames' =>
+                [
+                    'SentTimestamp',
+                    'ApproximateReceiveCount'
+                ]
+        ]);
+
         if (!empty($result['Messages'])) {
             // By default, only one message will be returned
             foreach ($result['Messages'] as $message) {
                 $newMessage = new Message();
                 $newMessage
                     ->setBody($message['Body'])
-                    ->setReceiptHandle($message['ReceiptHandle']);
-                if (isset($message["Attributes"])) {
-                    $sentDate = new \DateTime();
-                    // The given timestamp is in millisecond
-                    $sentDate->setTimestamp(intval($message["Attributes"]["SentTimestamp"]) / 1000);
-                    $newMessage
-                        ->setDequeueCount($message["Attributes"]["ApproximateReceiveCount"])
-                        ->setInsertionDate($sentDate);
-                }
+                    ->setReceiptHandle($message['ReceiptHandle'])
+                    ->setDequeueCount($message['Attributes']['ApproximateReceiveCount'])
+                    ->setInsertionDate(
+                        (new \DateTime())->setTimestamp(
+                            intdiv(intval($message['Attributes']['SentTimestamp']), 1000)
+                        )
+                    );
+
                 return $newMessage;
             }
         }
