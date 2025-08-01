@@ -84,14 +84,21 @@ class QueueService
         string $queueUrl,
         string $messageBody,
         string $messageGroupId = null,
-        string $messageDeduplicationId = null
+        string $messageDeduplicationId = null,
+        int $delaySeconds = null,
     ) {
         // Check first if we are running in a console
         if ($this->output) {
             $this->output->writeln((new \DateTime())->format('[c] ') . "Sending a message on $queueUrl ...");
         }
 
-        $this->getAdapter()->sendMessage($queueUrl, $messageBody, $messageGroupId, $messageDeduplicationId);
+        $this->getAdapter()->sendMessage(
+            $queueUrl,
+            $messageBody,
+            $messageGroupId,
+            $messageDeduplicationId,
+            $delaySeconds
+        );
 
         return $this;
     }

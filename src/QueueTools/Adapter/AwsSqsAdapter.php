@@ -15,6 +15,7 @@ namespace BayWaReLusy\QueueTools\Adapter;
 
 use Aws\Sqs\SqsClient;
 use BayWaReLusy\QueueTools\Message;
+use InvalidArgumentException;
 
 /**
  * AwsSqsAdapter
@@ -75,7 +76,8 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
         string $queueUrl,
         string $messageBody,
         string $messageGroupId = null,
-        string $messageDeduplicationId = null
+        string $messageDeduplicationId = null,
+        int $delaySeconds = null,
     ): QueueAdapterInterface {
         $params =
             [
@@ -89,6 +91,14 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
 
         if ($messageDeduplicationId) {
             $params['MessageDeduplicationId'] = $messageDeduplicationId;
+        }
+
+        if (!is_null($delaySeconds)) {
+            if ($delaySeconds < 0) {
+                throw new InvalidArgumentException('DelaySeconds must be a positive integer.');
+            }
+
+            $params['DelaySeconds'] = $delaySeconds;
         }
 
         $this->getSqsClient()->sendMessage($params);

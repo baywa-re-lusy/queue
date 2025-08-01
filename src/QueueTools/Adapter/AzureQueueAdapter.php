@@ -72,8 +72,13 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
         string $queueUrl,
         string $messageBody,
         string $messageGroupId = null,
-        string $messageDeduplicationId = null
+        string $messageDeduplicationId = null,
+        int $delaySeconds = null,
     ): AzureQueueAdapter {
+        if (!is_null($delaySeconds)) {
+            throw new \InvalidArgumentException('DelaySeconds are not implemented for Azure queues.');
+        }
+
         $this->getQueueRestProxy()->createQueue($queueUrl);
         $this->getQueueRestProxy()->createMessage($queueUrl, $messageBody);
         return $this;

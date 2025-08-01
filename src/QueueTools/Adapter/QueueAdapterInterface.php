@@ -42,7 +42,8 @@ interface QueueAdapterInterface
         string $queueUrl,
         string $messageBody,
         string $messageGroupId = null,
-        string $messageDeduplicationId = null
+        string $messageDeduplicationId = null,
+        int $delaySeconds = null,
     ): QueueAdapterInterface;
 
     /**
