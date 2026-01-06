@@ -38,7 +38,6 @@ jobs:
           paths:
             - .
 
-
   static:
     docker:
       - image: ${ACR_HOSTNAME_COMMON}/alpine-php84-build:1.0.0
