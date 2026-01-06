@@ -2,6 +2,8 @@
 <ruleset name="BayWa r.e. Queue Tools Coding Standard">
     <description>BayWa r.e. Queue Tools Coding Standard</description>
 
+    <file>src</file>
+
     <!-- display progress -->
     <arg value="p"/>
     <arg name="colors"/>

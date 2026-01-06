@@ -83,9 +83,9 @@ class QueueService
     public function sendMessage(
         string $queueUrl,
         string $messageBody,
-        string $messageGroupId = null,
-        string $messageDeduplicationId = null,
-        int $delaySeconds = null,
+        ?string $messageGroupId = null,
+        ?string $messageDeduplicationId = null,
+        ?int $delaySeconds = null,
     ) {
         // Check first if we are running in a console
         if ($this->output) {
