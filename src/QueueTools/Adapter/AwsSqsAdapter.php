@@ -75,9 +75,9 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
     public function sendMessage(
         string $queueUrl,
         string $messageBody,
-        string $messageGroupId = null,
-        string $messageDeduplicationId = null,
-        int $delaySeconds = null,
+        ?string $messageGroupId = null,
+        ?string $messageDeduplicationId = null,
+        ?int $delaySeconds = null,
     ): QueueAdapterInterface {
         $params =
             [
