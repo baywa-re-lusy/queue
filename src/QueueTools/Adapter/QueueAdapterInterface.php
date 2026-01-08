@@ -47,6 +47,24 @@ interface QueueAdapterInterface
     ): QueueAdapterInterface;
 
     /**
+     * Send multiple messages.
+     *
+     * @param string $queueUrl
+     * @param string[] $messageBodies
+     * @param ?string $messageGroupId In case of a FIFO queue, messages can be grouped
+     * @param ?string $messageDeduplicationId In case of a FIFO queue, a deduplication ID can be provided
+     * @return $this
+     * @throws QueueException
+     */
+    public function sendMessages(
+        string $queueUrl,
+        array $messageBodies,
+        ?string $messageGroupId = null,
+        ?string $messageDeduplicationId = null,
+        ?int $delaySeconds = null,
+    ): QueueAdapterInterface;
+
+    /**
      * @param string $queueUrl
      * @param Message $message
      * @return $this

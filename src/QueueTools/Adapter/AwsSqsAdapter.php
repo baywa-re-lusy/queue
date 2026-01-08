@@ -16,6 +16,7 @@ namespace BayWaReLusy\QueueTools\Adapter;
 use Aws\Sqs\SqsClient;
 use BayWaReLusy\QueueTools\Message;
 use InvalidArgumentException;
+use Ramsey\Uuid\Uuid;
 
 /**
  * AwsSqsAdapter
@@ -102,6 +103,53 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
         }
 
         $this->getSqsClient()->sendMessage($params);
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function sendMessages(
+        string $queueUrl,
+        array $messageBodies,
+        ?string $messageGroupId = null,
+        ?string $messageDeduplicationId = null,
+        ?int $delaySeconds = null,
+    ): QueueAdapterInterface {
+        $params =
+            [
+                'QueueUrl' => $queueUrl,
+                'Entries'  => []
+            ];
+
+        foreach ($messageBodies as $messageBody) {
+            $entry =
+                [
+                    'Id' => Uuid::uuid4()->toString(),
+                    'MessageBody' => $messageBody,
+                ];
+
+            if ($messageGroupId) {
+                $entry['MessageGroupId'] = $messageGroupId;
+            }
+
+            if ($messageDeduplicationId) {
+                $entry['MessageDeduplicationId'] = $messageDeduplicationId;
+            }
+
+            if (!is_null($delaySeconds)) {
+                if ($delaySeconds < 0) {
+                    throw new InvalidArgumentException('DelaySeconds must be a positive integer.');
+                }
+
+                $entry['DelaySeconds'] = $delaySeconds;
+            }
+
+            $params['Entries'][] = $entry;
+        }
+
+        $this->getSqsClient()->sendMessageBatch($params);
 
         return $this;
     }
