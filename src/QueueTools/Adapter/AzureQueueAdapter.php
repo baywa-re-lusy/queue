@@ -106,4 +106,14 @@ class AzureQueueAdapter implements PollingQueueAdapterInterface
     ): QueueAdapterInterface {
         throw new \Exception('Not yet implemented');
     }
+
+    public function sendMessages(
+        string $queueUrl,
+        array $messageBodies,
+        ?string $messageGroupId = null,
+        ?string $messageDeduplicationId = null,
+        ?int $delaySeconds = null,
+    ): QueueAdapterInterface {
+        throw new \Exception('Not yet implemented');
+    }
 }
