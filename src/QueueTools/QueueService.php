@@ -104,6 +104,38 @@ class QueueService
     }
 
     /**
+     * Send multiple messages in a batch request.
+     *
+     * @param string $queueUrl
+     * @param string[] $messageBodies
+     * @param string|null $messageGroupId In case of a FIFO queue, messages can be grouped
+     * @param string|null $messageDeduplicationId In case of a FIFO queue, a deduplication ID can be provided
+     * @return QueueService Fluent interface
+     */
+    public function sendMessages(
+        string $queueUrl,
+        array $messageBodies,
+        ?string $messageGroupId = null,
+        ?string $messageDeduplicationId = null,
+        ?int $delaySeconds = null,
+    ) {
+        // Check first if we are running in a console
+        if ($this->output) {
+            $this->output->writeln((new \DateTime())->format('[c] ') . "Sending messages on $queueUrl ...");
+        }
+
+        $this->getAdapter()->sendMessages(
+            $queueUrl,
+            $messageBodies,
+            $messageGroupId,
+            $messageDeduplicationId,
+            $delaySeconds
+        );
+
+        return $this;
+    }
+
+    /**
      * Receive a message from the given queue.
      *
      * @param string $queueUrl
