@@ -117,6 +117,10 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
         ?string $messageDeduplicationId = null,
         ?int $delaySeconds = null,
     ): QueueAdapterInterface {
+        if (count($messageBodies) > 10) {
+            throw new InvalidArgumentException('You can only send 10 messages at a time.');
+        }
+
         $params =
             [
                 'QueueUrl' => $queueUrl,
