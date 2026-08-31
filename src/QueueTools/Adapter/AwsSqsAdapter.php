@@ -57,7 +57,12 @@ class AwsSqsAdapter implements PollingQueueAdapterInterface
                         [
                             'key'    => $this->awsKey,
                             'secret' => $this->awsSecret
-                        ]
+                        ],
+                    'http' =>
+                        [
+                            'connect_timeout' => 5,
+                            'timeout'         => 25,
+                        ],
                 ];
 
             if (!is_null($this->sqsEndpoint)) {
